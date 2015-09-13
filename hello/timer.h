@@ -1,4 +1,4 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void Timer1Init(void);
+void Timer2Init(void);
