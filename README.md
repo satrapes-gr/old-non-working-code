@@ -11,13 +11,13 @@ First of all there was a problem with the define LED_ON function,
 as BSRRLH and BSRRH have been merged in one BSRR.
 
 Therefore change
-#define LED_ON() GPIOA->BSSRL |= (1 << 5)
-#define LED_OFF() GPIOA->BSSRH |= (1 << 5)
+\#define LED_ON() GPIOA->BSSRL |= (1 << 5)
+\#define LED_OFF() GPIOA->BSSRH |= (1 << 5)
 
 to:
 
-#define LED_ON() GPIOA->BSRR |= (1 << 5)
-#define LED_OFF() GPIOA->BSRR |= (1 << 21)
+\#define LED_ON() GPIOA->BSRR |= (1 << 5)
+\#define LED_OFF() GPIOA->BSRR |= (1 << 21)
 
 And then:
 instead of running 
