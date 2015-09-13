@@ -24,10 +24,10 @@
 int main() {
 	GPIOAInit();
 	Timer2Init();
-    volatile int i = 0;
+//    volatile int i = 0;
 	/* Turn on the LED */
 	while(1){
-		//printf("Turning LD2 off\n");
+/*		//printf("Turning LD2 off\n");
 		LED_OFF();
 		//printf("Waiting...\n");
 		for (i=0;i<3000000;i++){
@@ -38,7 +38,7 @@ int main() {
 		//printf("Waiting...\n");
 		for (i=0;i<3000000;i++){
 			i++;
-		}
+		}*/
 	}
 	return 0;
 }

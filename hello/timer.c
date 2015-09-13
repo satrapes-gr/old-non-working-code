@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stm32f4xx.h>        
+#include "gpio.h"
+#include "timer.h"
 
 void Timer2Init(void){
 	/* Enable TIM2 */
@@ -11,7 +13,7 @@ void Timer2Init(void){
 	//TIM2_PSC Prescaler register
 	TIM2->PSC = 999;
 	//TIM2_ARR Auto reload register
-	TIM2->ARR = 1024;
+	TIM2->ARR = 41983;
 	//TIM2_DIER Interrupt enable register
 	TIM2->DIER |= TIM_DIER_UIE;
 	NVIC_EnableIRQ(TIM2_IRQn);
@@ -25,7 +27,17 @@ void Timer2Init(void){
 
 void TIM2_IRQHandler(void){
 	__disable_irq();
+	//If interrupt is detected
 	if(TIM2->SR & (TIM_SR_UIF)){
+	//Clear interrupt
 		TIM2->SR &= ~(TIM_SR_UIF);
+		//Switch LED_STATE
+		if(GPIOA->BSRR){
+			LED_OFF();
+		}else{
+			LED_ON();
+		}
+		
 	}
+	__enable_irq();
 }
