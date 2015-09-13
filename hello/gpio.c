@@ -9,4 +9,5 @@ void GPIOAInit(){
 	GPIOA->MODER |= (1 << (LED_PIN << 1));
 	//Configure GPIOA pin 5 in max speed
 	GPIOA->OSPEEDR |= (2 << (LED_PIN << 1));
+	LED_OFF();
 }

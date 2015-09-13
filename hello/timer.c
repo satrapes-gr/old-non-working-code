@@ -11,9 +11,9 @@ void Timer2Init(void){
 	//TIM2_CNT Counter register
 
 	//TIM2_PSC Prescaler register
-	TIM2->PSC = 999;
+	TIM2->PSC = 250;
 	//TIM2_ARR Auto reload register
-	TIM2->ARR = 41983;
+	TIM2->ARR = 32768;
 	//TIM2_DIER Interrupt enable register
 	TIM2->DIER |= TIM_DIER_UIE;
 	NVIC_EnableIRQ(TIM2_IRQn);
@@ -32,12 +32,11 @@ void TIM2_IRQHandler(void){
 	//Clear interrupt
 		TIM2->SR &= ~(TIM_SR_UIF);
 		//Switch LED_STATE
-		if(GPIOA->BSRR){
+		if((GPIOA->IDR & (1<<5))){
 			LED_OFF();
 		}else{
 			LED_ON();
 		}
-		
 	}
 	__enable_irq();
 }
