@@ -29,8 +29,11 @@ arm-none-eabi-gdb main.elf
 
 then inside the prompt> run
 >target remote localhost:3333
+
 >monitor reset halt
+
 >load 
+
 >continue
 
 Everything else remains in the same exact way as the aforementioned forum post.
