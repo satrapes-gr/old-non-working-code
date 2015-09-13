@@ -12,11 +12,13 @@ as BSRRLH and BSRRH have been merged in one BSRR.
 
 Therefore change
 \#define LED_ON() GPIOA->BSSRL |= (1 << 5)
+
 \#define LED_OFF() GPIOA->BSSRH |= (1 << 5)
 
 to:
 
 \#define LED_ON() GPIOA->BSRR |= (1 << 5)
+
 \#define LED_OFF() GPIOA->BSRR |= (1 << 21)
 
 And then:
@@ -28,6 +30,7 @@ arm-none-eabi-gdb main.elf
 then inside the prompt> run
 >target remote localhost:3333
 >monitor reset halt
->load reset run or continue
+>load 
+>continue
 
 Everything else remains in the same exact way as the aforementioned forum post.
