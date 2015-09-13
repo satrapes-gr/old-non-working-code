@@ -37,3 +37,6 @@ then inside the prompt> run
 >continue
 
 Everything else remains in the same exact way as the aforementioned forum post.
+
+The included files now switch the led light (the green LD2) with interrupts from Timer2.
+This is done without HAL, just by writing to the registers directly.
