@@ -15,7 +15,10 @@
 *
 */
 #include <stm32f4xx.h>
- 
+#include <stdio.h>
+#include "serial.h"
+
+
 #define LED_PIN 5
 #define LED_ON() GPIOA->BSRR |= (1 << 5)
 #define LED_OFF() GPIOA->BSRR |= (1 << 21)
@@ -27,15 +30,19 @@ int main() {
 	GPIOA->MODER |= (1 << (LED_PIN << 1));
 	/* Configure GPIOA pin 5 in max speed */
 	GPIOA->OSPEEDR |= (2 << (LED_PIN << 1));
-	volatile int i = 0;
+    volatile int i = 0;
 	/* Turn on the LED */
 	while(1){
+		//printf("Turning LD2 off\n");
 		LED_OFF();
-		for (i=0;i<2000000;i++){
+		//printf("Waiting...\n");
+		for (i=0;i<3000000;i++){
 			i++;
 		}
+		//printf("Turning LD2 on\n");
 		LED_ON();
-		for (i=0;i<2000000;i++){
+		//printf("Waiting...\n");
+		for (i=0;i<3000000;i++){
 			i++;
 		}
 	}
