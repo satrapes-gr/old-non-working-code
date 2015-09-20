@@ -23,15 +23,21 @@ EXTRA_FLAGS=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
 OBJ=startup_stm32f401xe.o system.o gpio.o timer.o serial.o main.o
 
 all: main.o system.o startup_stm32f401xe.o serial.o gpio.o timer.o 
+	@echo "STM32CUBEFOLDER: $(STM32CUBEFOLDER)"
+	@echo "Compiler: $(CC)"
 	$(CC) $(CFLAGS) $(EXTRA_FLAGS) $(OBJ) -o main.elf
+
+#Compile all c files to object files with same identifier
+#e.g. file.c -> file.o
+%.o: %.c
+	@echo "Compiling $< module..."
+	$(CC) $(CFLAGS) $(CIDIR) -c $< -o $@
 
 startup_stm32f401xe.o: startup_stm32f401xe.s
 	$(CC) $(CFLAGS) $(CIDIR) -c startup_stm32f401xe.s -o startup_stm32f401xe.o
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(CIDIR) -c $< -o $@
-
 clean:
+	@echo "Removing all object files..."
 	rm -f *.o
 #adctemp.o: adctemp.c
 #	$(CC) $(CFLAGS) $(CIDIR) -c adctemp.c -o adctemp.o
