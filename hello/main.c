@@ -27,18 +27,6 @@ int main() {
 //    volatile int i = 0;
 	/* Turn on the LED */
 	while(1){
-/*		//printf("Turning LD2 off\n");
-		LED_OFF();
-		//printf("Waiting...\n");
-		for (i=0;i<3000000;i++){
-			i++;
-		}
-		//printf("Turning LD2 on\n");
-		LED_ON();
-		//printf("Waiting...\n");
-		for (i=0;i<3000000;i++){
-			i++;
-		}*/
 		;
 	}
 	return 0;
