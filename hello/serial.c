@@ -33,12 +33,16 @@ void serial_init(){
 	//Program number of stop bits
 	USART2->CR2 &= ~(3UL << 12);
 	//Select 1st scenario
+	USART2->BRR &= ~(0xFFFF);
 	USART2->BRR = 0x111 << 4 | 0x7 << 0;
-	//Configure PA9 and PA10 GPIO pins
-	GPIOA->MODER |= (1UL << (2 << 1));
-	GPIOA->MODER |= (1UL << (3 << 1));
-	GPIOA->OSPEEDR |= (2UL  << (2 << 1));
-	GPIOA->OSPEEDR |= (2UL  << (3 <<1));
+	//Configure PA2 and PA3 GPIO pins
+	GPIOA->MODER &= ~(3UL << (2 << 1));
+	GPIOA->MODER |= (2UL << (2 << 1));
+	GPIOA->MODER &= ~(3UL << (3 << 1));
+	GPIOA->MODER |= (2UL << (3 << 1));
+	GPIOA->OSPEEDR &= ~(2UL << (2 << 1));
+	GPIOA->OSPEEDR &= ~(2UL << (3 << 1));
+	//GPIOA->OSPEEDR |= (2UL  << (3 << 1));
 
 	//Set TE bit in CR1 to send an idle frame as first transmission
 	USART2->CR1 |= 1UL << 3;
