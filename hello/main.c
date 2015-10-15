@@ -24,6 +24,7 @@
 int main() {
 	GPIOAInit();
 	Timer2Init();
+	serial_init();
 //    volatile int i = 0;
 	/* Turn on the LED */
 	while(1){
