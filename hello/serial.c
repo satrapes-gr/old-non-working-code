@@ -49,19 +49,19 @@ void serial_init(){
 //	USART2->CR3
 //	USART2->GTPR
 	USART2->DR =0x55;
-	while((USART2->SR & (1UL << 6)) !=1);
+//	whileUSART2->SR & (1UL << 6)) !=1);
 	USART2->CR1 |= 1UL <<3;
 	USART2->DR = 0xF0;
-	while((USART2->SR & (1UL << 6)) !=1);
+//	whileUSART2->SR & (1UL << 6)) !=1);
 	USART2->CR1 |= 1UL <<3;
 	USART2->DR = 0x0F;
-	while((USART2->SR & (1UL << 6)) !=1);
+//	whileUSART2->SR & (1UL << 6)) !=1);
 	USART2->CR1 |= 1UL <<3;
 	USART2->DR = 0x33;
-	while((USART2->SR & (1UL << 6)) !=1);
+//	whileUSART2->SR & (1UL << 6)) !=1);
 	USART2->CR1 |= 1UL <<3;
 	USART2->DR = 0xA5;
-	while((USART2->SR & (1UL << 6)) !=1);
+//	whileUSART2->SR & (1UL << 6)) !=1);
 
 
 

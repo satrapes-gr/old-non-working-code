@@ -11,8 +11,9 @@
 #LIBROOT=~/
 #The location where I have saved the STM32CubeF4 folder
 STM32CUBEFOLDER=~/embedded/STM32Cube_FW_F4_V1.7.0/
+STM32DSPSTDPERIPHFOLDER=~/embedded/STM32F4xx_DSP_StdPeriph_Lib_V1.6.0/
 #Declare the folders that I need to include
-CIDIR=-I $(STM32CUBEFOLDER)Drivers/CMSIS/Device/ST/STM32F4xx/Include -I $(STM32CUBEFOLDER)Drivers/CMSIS/Include
+CIDIR=-I $(STM32CUBEFOLDER)Drivers/CMSIS/Device/ST/STM32F4xx/Include -I $(STM32CUBEFOLDER)Drivers/CMSIS/Include -I $(STM32DSPSTDPERIPHFOLDER)Libraries/STM32F4xx_StdPeriph_Driver/inc
 #Declare your compiler here
 CC=arm-none-eabi-gcc
 #Flags to compile c files for STM32F401RE
