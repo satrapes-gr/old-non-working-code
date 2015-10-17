@@ -13,11 +13,11 @@
 STM32CUBEFOLDER=~/embedded/STM32Cube_FW_F4_V1.7.0/
 STM32DSPSTDPERIPHFOLDER=~/embedded/STM32F4xx_DSP_StdPeriph_Lib_V1.6.0/
 #Declare the folders that I need to include
-CIDIR=-I $(STM32CUBEFOLDER)Drivers/CMSIS/Device/ST/STM32F4xx/Include -I $(STM32CUBEFOLDER)Drivers/CMSIS/Include -I $(STM32DSPSTDPERIPHFOLDER)Libraries/STM32F4xx_StdPeriph_Driver/inc
+CIDIR=-I$(STM32CUBEFOLDER)Drivers/CMSIS/Device/ST/STM32F4xx/Include -I$(STM32CUBEFOLDER)Drivers/CMSIS/Include -I$(STM32DSPSTDPERIPHFOLDER)Libraries/STM32F4xx_StdPeriph_Driver/inc
 #Declare your compiler here
 CC=arm-none-eabi-gcc
 #Flags to compile c files for STM32F401RE
-CFLAGS=-g -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -DSTM32F401xE -Os
+CFLAGS=-g -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -DSTM32F401xE -Os -DUSE_STDPERIPH_DRIVER
 #Extra flags to create the ELF file
 EXTRA_FLAGS=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
 #Declare all objects for the linker
