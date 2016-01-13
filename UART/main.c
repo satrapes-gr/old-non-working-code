@@ -1,7 +1,9 @@
 // STM32 USART2 (Tx PA.2, Rx PA.3) STM32F401RE NUCLEO - sourcer32@gmail.com
-#include "stm32f4xx_usart.h"
-#include <stm32f4xx_gpio.h>
+#include "stm32f4xx.h"
 #include <stm32f4xx_rcc.h>
+#include <stm32f4xx_usart.h>
+#include <stm32f4xx_gpio.h>
+
 /**************************************************************************************/
    
 void RCC_Configuration(void){
