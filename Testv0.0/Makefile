@@ -1,55 +1,49 @@
+#rule format
+#target : prerequisites
+#	recipe
 
-#
-#ELF=$(notdir $(CURDIR)).elf
-#
-## Tool path
-#
-#TOOLROOT=~/
-#
-## Library path
-#
-#LIBROOT=~/
-#The location where I have saved the STM32CubeF4 folder
-STM32CUBEFOLDER=~/embedded/STM32Cube_FW_F4_V1.7.0/
-#Declare the folders that I need to include
-CIDIR=-I $(STM32CUBEFOLDER)Drivers/CMSIS/Device/ST/STM32F4xx/Include -I $(STM32CUBEFOLDER)Drivers/CMSIS/Include
-#Declare your compiler here
+#############
+#           #
+# Variables #
+#           #
+#############
+#Compiler variable
 CC=arm-none-eabi-gcc
-#Flags to compile c files for STM32F401RE
+
+#Compiler flags
 CFLAGS=-g -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -DSTM32F401xE -Os
-#Extra flags to create the ELF file
-EXTRA_FLAGS=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
-#Declare all objects for the linker
-OBJ=startup_stm32f401xe.o system.o gpio.o timer.o serial.o main.o
 
-all: main.o system.o startup_stm32f401xe.o serial.o gpio.o timer.o 
-	@echo "STM32CUBEFOLDER: $(STM32CUBEFOLDER)"
-	@echo "Compiler: $(CC)"
-	@echo dir: $(dir $(CURDIR))
-	@echo notdir: $(notdir $(CURDIR))
-	@echo basename: $(basename $(CURDIR))
-	@echo suffix: $(suffix $(CURDIR))
-	@echo realpath: $(realpath $(CURDIR))
-	@echo abspath: $(abspath $(CURDIR))
+#Linker flags
+LD=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
 
-	$(CC) $(CFLAGS) $(EXTRA_FLAGS) $(OBJ) -o main.elf
+#Project directories
+OBJDIR = ./obj
+SRCDIR = ./src
+INCDIR = -I ./inc
 
-#Compile all c files to object files with same identifier
-#e.g. file.c -> file.o
-%.o: %.c
-	@echo Compiling $< module...
-	@echo [Compiling]: $<
-	$(CC) $(CFLAGS) $(CIDIR) -c $< -o $@
+SOURCES = $(wildcard $(SRCDIR)/*.c)
+OBJS:= $(addprefix $(OBJDIR)/, $(patsubst %.c, %.o, $(notdir $(SOURCES))))
+OBJS+= ./obj/startup_stm32f401xe.o
+SOURCES += ./src/startup_stm32f401xe.s
 
-startup_stm32f401xe.o: startup_stm32f401xe.s
-	$(CC) $(CFLAGS) $(CIDIR) -c startup_stm32f401xe.s -o startup_stm32f401xe.o
+
+all: $(OBJS) 
+	@echo $(SOURCES)
+	@echo $(OBJS)
+	@echo "Linking..."
+	$(CC) $(CFLAGS) $(LD) $(OBJS) -o testSerial.elf
+	@echo "Link successful."
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@echo "Compiling $<..."
+	$(CC) $(CFLAGS) $(INCDIR) -c $< -o $@
+	@echo "Compile successful."
+
+./obj/startup_stm32f401xe.o: ./src/startup_stm32f401xe.s
+	@echo "Compiling $<..."
+	$(CC) $(CFLAGS) $(INCDIR) -c ./src/startup_stm32f401xe.s -o ./obj/startup_stm32f401xe.o
+	@echo "Compile successful."
 
 clean:
-	@echo "Removing all object files..."
-	rm -f *.o
-#adctemp.o: adctemp.c
-#	$(CC) $(CFLAGS) $(CIDIR) -c adctemp.c -o adctemp.o
-#
-
-
-
+	@echo "Removing binary and object files..."
+	rm -f ./testSerial.elf ./obj/*.o
