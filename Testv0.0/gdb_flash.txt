@@ -1,0 +1,10 @@
+#Segger: listen on port
+target remote localhost:3333
+
+#Segger: reset device
+monitor reset halt
+
+#load/flash application file
+load
+
+quit

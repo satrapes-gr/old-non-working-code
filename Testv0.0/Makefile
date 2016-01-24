@@ -1,7 +1,3 @@
-#rule format
-#target : prerequisites
-#	recipe
-
 #############
 #           #
 # Variables #
@@ -26,10 +22,14 @@ OBJS:= $(addprefix $(OBJDIR)/, $(patsubst %.c, %.o, $(notdir $(SOURCES))))
 OBJS+= ./obj/startup_stm32f401xe.o
 SOURCES += ./src/startup_stm32f401xe.s
 
-
+#########
+#       #
+# Rules #
+#       #
+#########
 all: $(OBJS) 
-	@echo $(SOURCES)
-	@echo $(OBJS)
+	@echo "Src files: $(SOURCES)"
+	@echo "Obj files: $(OBJS)"
 	@echo "Linking..."
 	$(CC) $(CFLAGS) $(LD) $(OBJS) -o testSerial.elf
 	@echo "Link successful."

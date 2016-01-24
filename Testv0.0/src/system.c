@@ -47,7 +47,7 @@ void SystemInit() {
  
 	/*
 	 * Configure Main PLL
-	 * HSI as clock input
+	 * HSI as clock input 16MHz
 	 * fvco = 336MHz
 	 * fpllout = 84MHz
 	 * fusb = 48MHz

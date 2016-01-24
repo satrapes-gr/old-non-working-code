@@ -1,0 +1,13 @@
+#ifndef SERIAL_H
+#define SERIAL_H
+
+#include "stm32f4xx.h"
+#include <system_stm32f4xx.h>
+
+//SERIAL_TX = PA_2
+//SERIAL_RX = PA_3
+
+void serialInit(void);
+int sendChar(int ch);
+
+#endif //SERIAL_H
