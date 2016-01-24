@@ -40,3 +40,9 @@ Everything else remains in the same exact way as the aforementioned forum post.
 
 The included files now switch the led light (the green LD2) with interrupts from Timer2.
 This is done without HAL, just by writing to the registers directly.
+
+Added a gdb_flash.txt
+This file contains the 3 first commands for the arm-none-eabi-gdb.
+You can run:
+arm-none-eabi-gdb -x gdb_flash.txt your_own.elf
+and it will automatically run the commands on startup so that you don't have to retype them all the time.
