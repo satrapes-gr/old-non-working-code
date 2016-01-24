@@ -7,4 +7,4 @@ monitor reset halt
 #load/flash application file
 load
 
-quit
+
