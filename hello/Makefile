@@ -22,7 +22,7 @@ EXTRA_FLAGS=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
 #Declare all objects for the linker
 OBJ=startup_stm32f401xe.o system.o gpio.o timer.o serial.o main.o
 
-all: main.o system.o startup_stm32f401xe.o serial.o gpio.o timer.o 
+all: $(OBJ)
 	@echo "STM32CUBEFOLDER: $(STM32CUBEFOLDER)"
 	@echo "Compiler: $(CC)"
 	@echo dir: $(dir $(CURDIR))

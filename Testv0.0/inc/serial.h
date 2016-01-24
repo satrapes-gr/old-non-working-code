@@ -8,6 +8,6 @@
 //SERIAL_RX = PA_3
 
 void serialInit(void);
-int sendChar(int ch);
+uint8_t sendChar(uint8_t ch);
 
 #endif //SERIAL_H

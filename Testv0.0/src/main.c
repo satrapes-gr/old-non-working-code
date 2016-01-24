@@ -5,8 +5,8 @@
 #include "serial.h"
 
 int main(){
-	int i;
-	int result;
+	uint8_t i;
+	uint8_t result;
 	GPIOAInit();
 	serialInit();
 	while(1){
