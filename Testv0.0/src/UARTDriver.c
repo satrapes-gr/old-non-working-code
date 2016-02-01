@@ -1,4 +1,4 @@
-#include "serial.h"
+#include "UARTDriver.h"
 
 void serialInit(){
 	//Enable clock for USART2
