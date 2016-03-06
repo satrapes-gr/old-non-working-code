@@ -12,19 +12,16 @@ CFLAGS=-g -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -DSTM32F401xE -Os
 #Linker flags
 LD=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
 
-
 #Project directories
 OBJECTS_DIR = objs
 SOURCE_DIR = src
 INCLUDE_DIR = inc
 
 #Find all source files (.c, .s, .cpp)
-SOURCE := $(wildcard $(SOURCE_DIR)/*.c) $(wildcard $(SOURCE_DIR)/*.s)$(wildcard $(SOURCE_DIR)/*.cpp)
+SOURCE := $(wildcard $(SOURCE_DIR)/*.c) $(wildcard $(SOURCE_DIR)/*.s) $(wildcard $(SOURCE_DIR)/*.cpp)
 
 #Find .o files for all source files (.c, .s, .cpp)
 OBJECTS:= $(addsuffix .o, $(addprefix $(OBJECTS_DIR)/, $(notdir $(basename $(SOURCE)))))
-$(warning $(OBJECTS))
-
 
 #SOURCE = $(wildcard $(SOURCE_DIR)/*.c)
 #OBJECTS:= $(addprefix $(OBJECTS_DIR)/, $(patsubst %.c, %.o, $(notdir $(SOURCE))))
