@@ -47,4 +47,4 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 
 clean:
 	@echo "Removing binary and object files..."
-	rm -f ./testSerial.elf ./objs/src/*.o
+	rm -f testSerial.elf objs/*.o
