@@ -16,7 +16,7 @@ LD=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
 #Project directories
 OBJECTS_DIR = objs
 SOURCE_DIR = src
-INCLUDE_DIR = -Iinc
+INCLUDE_DIR = inc
 
 SOURCE = $(wildcard $(SOURCE_DIR)/*.c)
 OBJECTS:= $(addprefix $(OBJECTS_DIR)/, $(patsubst %.c, %.o, $(notdir $(SOURCE))))
@@ -37,12 +37,12 @@ all: $(OBJECTS)
 
 $(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.c
 	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
 	@echo "Compile successful."
 
 ./objs/startup_stm32f401xe.o: ./src/startup_stm32f401xe.s
 	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) -c ./src/startup_stm32f401xe.s -o ./objs/startup_stm32f401xe.o
+	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c ./src/startup_stm32f401xe.s -o ./objs/startup_stm32f401xe.o
 	@echo "Compile successful."
 
 clean:
