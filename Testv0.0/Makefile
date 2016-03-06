@@ -14,35 +14,35 @@ LD=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
 
 
 #Project directories
-OBJDIR = objs
-SRCDIR = src
-INCDIR = -Iinc
+OBJECTS_DIR = objs
+SOURCE_DIR = src
+INCLUDE_DIR = -Iinc
 
-SOURCES = $(wildcard $(SRCDIR)/*.c)
-OBJS:= $(addprefix $(OBJDIR)/, $(patsubst %.c, %.o, $(notdir $(SOURCES))))
-OBJS+= $(OBJDIR)/startup_stm32f401xe.o
-SOURCES += ./src/startup_stm32f401xe.s
+SOURCE = $(wildcard $(SOURCE_DIR)/*.c)
+OBJECTS:= $(addprefix $(OBJECTS_DIR)/, $(patsubst %.c, %.o, $(notdir $(SOURCE))))
+OBJECTS+= $(OBJECTS_DIR)/startup_stm32f401xe.o
+SOURCE += ./src/startup_stm32f401xe.s
 
 #########
 #       #
 # Rules #
 #       #
 #########
-all: $(OBJS) 
-	@echo "Src files: $(SOURCES)"
-	@echo "Obj files: $(OBJS)"
+all: $(OBJECTS) 
+	@echo "Src files: $(SOURCE)"
+	@echo "Obj files: $(OBJECTS)"
 	@echo "Linking..."
-	$(CC) $(CFLAGS) $(LD) $(OBJS) -o testSerial.elf
+	$(CC) $(CFLAGS) $(LD) $(OBJECTS) -o testSerial.elf
 	@echo "Link successful."
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.c
 	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) $(INCDIR) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) -c $< -o $@
 	@echo "Compile successful."
 
 ./objs/startup_stm32f401xe.o: ./src/startup_stm32f401xe.s
 	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) $(INCDIR) -c ./src/startup_stm32f401xe.s -o ./objs/startup_stm32f401xe.o
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) -c ./src/startup_stm32f401xe.s -o ./objs/startup_stm32f401xe.o
 	@echo "Compile successful."
 
 clean:
