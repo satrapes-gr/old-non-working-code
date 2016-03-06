@@ -14,47 +14,36 @@ LD=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
 
 
 #Project directories
-OBJECTS_DIR = objs
-SOURCES_DIR = src
-INCLUDE_DIR = -I ./inc
+OBJDIR = ./objs/src
+SRCDIR = ./src
+INCDIR = -I ./inc
 
-SOURCES := $(shell find $(SOURCES_DIR) -name '*.c')\
-			$(shell find $(SOURCES_DIR) -name '*.s')\
-			$(shell find $(SOURCES_DIR) -name '*.cpp') 
-
-$(warning SOURCES is $(SOURCES))
-OBJECTS:= $(addsuffix .o, $(addprefix $(OBJECTS_DIR)/, $(basename $(SOURCES))))
-
-$(warning OBJECTS is $(OBJECTS))
-
+SOURCES = $(wildcard $(SRCDIR)/*.c)
+OBJS:= $(addprefix $(OBJDIR)/, $(patsubst %.c, %.o, $(notdir $(SOURCES))))
+OBJS+= ./objs/src/startup_stm32f401xe.o
+SOURCES += ./src/startup_stm32f401xe.s
 
 #########
 #       #
 # Rules #
 #       #
 #########
-all: $(OBJECTS) 
+all: $(OBJS) 
 	@echo "Src files: $(SOURCES)"
-	@echo "Obj files: $(OBJECTS)"
+	@echo "Obj files: $(OBJS)"
 	@echo "Linking..."
-	$(CC) $(CFLAGS) $(LD) $(OBJECTS) -o testSerial.elf
+	$(CC) $(CFLAGS) $(LD) $(OBJS) -o testSerial.elf
 	@echo "Link successful."
 
-$(OBJECTS_DIR)/$(SOURCES_DIR)/%.o: $(SOURCES_DIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCDIR) -c $< -o $@
 	@echo "Compile successful."
 
-$(OBJECTS_DIR)/$(SOURCES_DIR)/%.o: $(SOURCES_DIR)/%.s
+./objs/src/startup_stm32f401xe.o: ./src/startup_stm32f401xe.s
 	@echo "Compiling $<..."
-	$(CC) $(CFLAGS) $(INCLUDE_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCDIR) -c ./src/startup_stm32f401xe.s -o ./objs/src/startup_stm32f401xe.o
 	@echo "Compile successful."
-
-#$(OBJECTS_DIR)/$(SOURCES_DIR)/%.o: $(SOURCES_DIR)/%.cpp
-#	@echo "Compiling $<..."
-#	mkdir -p $(dir $<)
-#	$(CC) $(CFLAGS) $(INCLUDE_DIR) -c $< -o $@
-#	@echo "Compile successful."
 
 clean:
 	@echo "Removing binary and object files..."
