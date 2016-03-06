@@ -28,7 +28,7 @@
 
 static void RunAllTests(void)
 {
-    RUN_TEST_GROUP(UARTDriver);
+    RUN_TEST_GROUP(LedDriver);
 }
 
 int main(int ac, char* av[])
