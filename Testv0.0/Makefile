@@ -13,9 +13,15 @@ CFLAGS=-g -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -DSTM32F401xE -Os
 LD=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
 
 #Project directories
-OBJECTS_DIR = objs
-SOURCE_DIR = src
-INCLUDE_DIR = inc
+OBJECTS_DIR = objs/code
+SOURCE_DIR = src/code
+INCLUDE_DIR = inc/code
+
+UNITY_TEST_OBJECTS_DIR = objs/test/unity
+UNITY_TEST_SOURCE_DIR = src/test/unity
+
+CPPUNIT_TEST_OBJECTS_DIR = objs/test/cppunit
+CPPUNIT_TEST_SOURCE_DIR = src/test/cppunit
 
 #Helper Functions
 #@param: dir
@@ -33,24 +39,21 @@ get_src_from_dir_list = $(foreach dir, $1, $(call get_src_from_dir,$(dir)))
 
 #@param file extension (e.g. .o, .d etc)
 #@param text to substitute
-#@return substitute .c/.cpp files with .o, .d file extension
-__src_to = $(subst .c,$1, $(subst .cpp,$1,$2))
+#@return substitute .c/.s files with .o, .d file extension
+__src_to = $(subst .c,$1, $(subst .s,$1,$2))
 src_to = $(call __src_to,$1,$2)
 src_to_o = $(call src_to,.o,$1)
 
 #Find all source files (.c, .s, .cpp)
-SOURCE := $(call get_src_from_dir, $(SOURCE_DIR))
+SOURCE := $(shell find $(SOURCE_DIR) -name '*.[cs]')
 
 #Find .o files for all source files (.c, .s, .cpp)
-OBJECTS:= $(addsuffix .o, $(addprefix $(OBJECTS_DIR)/, $(notdir $(basename $(SOURCE)))))
+OBJECTS := $(patsubst $(SOURCE_DIR)/%, $(OBJECTS_DIR)/%, $(call src_to_o, $(SOURCE)))
 
 #Find all the test source files (.c, .s, .cpp)
-#TEST_SOURCE := $(call get_src_from_dir, $(SOURCE_DIR)/test)
-UNITY_TEST_SOURCE := $(shell find $(SOURCE_DIR)/test -name '*.c')
-$(warning UNITY_TEST_SOURCE ------------- $(UNITY_TEST_SOURCE))
+UNITY_TEST_SOURCE := $(shell find $(UNITY_TEST_SOURCE_DIR) -name '*.c')
 
-UNITY_TEST_OBJECTS := $(patsubst $(SOURCE_DIR)/%, $(OBJECTS_DIR)/%, $(call src_to_o, $(UNITY_TEST_SOURCE)))
-$(warning UNITY_TEST_OBJECTS ------------- $(UNITY_TEST_OBJECTS))
+UNITY_TEST_OBJECTS := $(patsubst $(UNITY_TEST_SOURCE_DIR)/%, $(UNITY_TEST_OBJECTS_DIR)/%, $(call src_to_o, $(UNITY_TEST_SOURCE)))
 
 #########
 #       #
@@ -66,11 +69,13 @@ all: $(OBJECTS)
 
 $(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.c
 	@echo "Compiling $<..."
+	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
 	@echo "Compile successful."
 	
 $(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.s
 	@echo "Compiling $<..."
+	mkdir -p $(@D)
 	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
 	@echo "Compile successful."
 	
@@ -81,4 +86,4 @@ $(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.cpp
 
 clean:
 	@echo "Removing binary and object files..."
-	rm -f testSerial.elf objs/*.o
+	rm -f testSerial.elf $(OBJECTS) $(UNITY_TEST_OBJECTS)
