@@ -1,2 +1,0 @@
-/home/satrapes/embedded/STM32F4xx_DSP_StdPeriph_Lib_V1.6.0/Libraries/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_usart.h
-/home/satrapes/embedded/projects/STM32F401RE/UART/stm32f4xx_usart.h
