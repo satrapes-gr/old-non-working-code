@@ -39,12 +39,12 @@ get_src_from_dir_list = $(foreach dir, $1, $(call get_src_from_dir,$(dir)))
 
 #@param file extension (e.g. .o, .d etc)
 #@param text to substitute
-#@return substitute .c/.s files with .o, .d file extension
+#@return substitute .c/.s files with .o file extension
 __src_to = $(subst .c,$1, $(subst .s,$1,$2))
 src_to = $(call __src_to,$1,$2)
 src_to_o = $(call src_to,.o,$1)
 
-#Find all source files (.c, .s, .cpp)
+#Find all source files (.c, .s)
 SOURCE := $(shell find $(SOURCE_DIR) -name '*.[cs]')
 
 #Find .o files for all source files (.c, .s, .cpp)
@@ -67,18 +67,12 @@ all: $(OBJECTS)
 	$(CC) $(CFLAGS) $(LD) $(OBJECTS) -o testSerial.elf
 	@echo "Link successful."
 
-$(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.c
+$(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.[cs]
 	@echo "Compiling $<..."
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
 	@echo "Compile successful."
-	
-$(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.s
-	@echo "Compiling $<..."
-	mkdir -p $(@D)
-	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
-	@echo "Compile successful."
-	
+		
 $(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.cpp
 	@echo "Compiling $<..."
 	$(CC) $(CFLAGS) -I$(INCLUDE_DIR) -c $< -o $@
@@ -86,4 +80,4 @@ $(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.cpp
 
 clean:
 	@echo "Removing binary and object files..."
-	rm -f testSerial.elf $(OBJECTS) $(UNITY_TEST_OBJECTS)
+	rm -rf testSerial.elf $(OBJECTS) $(UNITY_TEST_OBJECTS) $(OBJECTS_DIR)/*
