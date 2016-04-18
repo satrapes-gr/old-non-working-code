@@ -36,3 +36,13 @@ uint8_t sendChar(uint8_t ch){
 	while (!(USART2->SR & (1UL << 6)));
 	return ch;
 }
+
+uint8_t sendString(uint8_t *string){
+	int i = 0;
+	while(*string != '\0'){
+		sendChar(*string);
+		string++;
+		i++;
+	}
+	return i;
+}

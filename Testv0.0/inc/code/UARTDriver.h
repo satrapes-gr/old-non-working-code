@@ -9,5 +9,6 @@
 
 void serialInit(void);
 uint8_t sendChar(uint8_t ch);
+uint8_t sendString(uint8_t *string);
 
 #endif //SERIAL_H

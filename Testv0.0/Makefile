@@ -44,6 +44,8 @@ __src_to = $(subst .c,$1, $(subst .s,$1,$2))
 src_to = $(call __src_to,$1,$2)
 src_to_o = $(call src_to,.o,$1)
 
+debug_print_list = $(foreach word,$1,echo "  $(word)";) echo;
+
 #Find all source files (.c, .s)
 SOURCE := $(shell find $(SOURCE_DIR) -name '*.[cs]')
 
@@ -81,3 +83,28 @@ $(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.cpp
 clean:
 	@echo "Removing binary and object files..."
 	rm -rf testSerial.elf $(OBJECTS) $(UNITY_TEST_OBJECTS) $(OBJECTS_DIR)/*
+
+debug:
+	@echo
+	@echo "Target Source files:"
+	@$(call debug_print_list,$(SOURCE))
+	@echo "Target Object files:"
+	@$(call debug_print_list,$(OBJECTS))
+	@echo "Test Source files:"
+	@$(call debug_print_list,$(UNITY_TEST_SOURCE))
+	@echo "Test Object files:"
+	@$(call debug_print_list,$(UNITY_TEST_OBJECTS))
+	@echo "Mock Source files:"
+	@$(call debug_print_list,$(MOCKS_SRC))
+	@echo "Mock Object files:"
+	@$(call debug_print_list,$(MOCKS_OBJS))
+	@echo "All Input Dependency files:"
+	@$(call debug_print_list,$(DEP_FILES))
+	@echo Stuff to clean:
+	@$(call debug_print_list,$(STUFF_TO_CLEAN))
+	@echo Includes:
+	@$(call debug_print_list,$(INCLUDES))
+
+
+	 
+	

@@ -7,12 +7,15 @@
 int main(){
 	uint8_t i;
 	uint8_t result;
+	uint8_t *string = "O Satrapis einai 8eos\r\n";
 	GPIOAInit();
 	serialInit();
 	while(1){
-		for(i=0; i<256; i++){
-			result = sendChar(i);
-			result += 1;
+		i = sendString(string);
+		if(i != 23){
+			sendChar(1);
+		}else{
+			sendChar(0);
 		}
 	}
 	return 0;
