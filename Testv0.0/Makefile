@@ -10,7 +10,7 @@ CC=arm-none-eabi-gcc
 CFLAGS=-g -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -DSTM32F401xE -Os
 
 #Linker flags
-LD=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
+LDFLAGS=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
 
 #Project directories
 OBJECTS_DIR = objs/code
@@ -66,7 +66,7 @@ all: $(OBJECTS)
 	@echo "Src files: $(SOURCE)"
 	@echo "Obj files: $(OBJECTS)"
 	@echo "Linking..."
-	$(CC) $(CFLAGS) $(LD) $(OBJECTS) -o testSerial.elf
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJECTS) -o testSerial.elf
 	@echo "Link successful."
 
 $(OBJECTS_DIR)/%.o: $(SOURCE_DIR)/%.[cs]
@@ -105,6 +105,17 @@ debug:
 	@echo Includes:
 	@$(call debug_print_list,$(INCLUDES))
 
+.PHONY: flags
+flags: 
+	@echo
+	@echo "Compile C source with CFLAGS:"
+	@$(call debug_print_list,$(CFLAGS))
+	@echo "Link with LDFLAGS:"
+	@$(call debug_print_list,$(LDFLAGS))
+	@echo "Link with LD_LIBRARIES:"
+	@$(call debug_print_list,$(LD_LIBRARIES))
+	@echo "Create libraries with ARFLAGS:"
+	@$(call debug_print_list,$(ARFLAGS))
+	@echo "OBJ files:"
+	@$(call debug_print_list,$(OBJECTS))
 
-	 
-	
