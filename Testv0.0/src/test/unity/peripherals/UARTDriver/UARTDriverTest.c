@@ -10,5 +10,5 @@ TEST_TEAR_DOWN(UARTDriver){
 }
 
 TEST(UARTDriver, StartHere){
-	TEST_ASSERT_TRUE(1);
+	TEST_ASSERT_TRUE(0);
 }
