@@ -1,0 +1,21 @@
+echo "Compiling src/code/system.c..."
+mkdir -p objs/code
+arm-none-eabi-gcc -g -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -DSTM32F401xE -Os -Iinc/code -c src/code/system.c -o objs/code/system.o
+echo "Compile successful."
+echo "Compiling src/code/startup_stm32f401xe.s..."
+mkdir -p objs/code
+arm-none-eabi-gcc -g -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -DSTM32F401xE -Os -Iinc/code -c src/code/startup_stm32f401xe.s -o objs/code/startup_stm32f401xe.o
+echo "Compile successful."
+echo "Compiling src/code/peripherals/UARTDriver.c..."
+mkdir -p objs/code/peripherals
+arm-none-eabi-gcc -g -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -DSTM32F401xE -Os -Iinc/code -c src/code/peripherals/UARTDriver.c -o objs/code/peripherals/UARTDriver.o
+echo "Compile successful."
+echo "Compiling src/code/peripherals/gpio.c..."
+mkdir -p objs/code/peripherals
+arm-none-eabi-gcc -g -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -DSTM32F401xE -Os -Iinc/code -c src/code/peripherals/gpio.c -o objs/code/peripherals/gpio.o
+echo "Compile successful."
+echo "Src files: src/code/system.c src/code/startup_stm32f401xe.s src/code/peripherals/UARTDriver.c src/code/peripherals/gpio.c"
+echo "Obj files:  objs/code/system.o  objs/code/startup_stm32f401xe.o  objs/code/peripherals/UARTDriver.o  objs/code/peripherals/gpio.o"
+echo "Linking..."
+arm-none-eabi-gcc -g -Wall -mcpu=cortex-m4 -mlittle-endian -mthumb -DSTM32F401xE -Os -TSTM32F401RE_FLASH.ld -Wl,--gc-sections  objs/code/system.o  objs/code/startup_stm32f401xe.o  objs/code/peripherals/UARTDriver.o  objs/code/peripherals/gpio.o -o testSerial.elf
+echo "Link successful."

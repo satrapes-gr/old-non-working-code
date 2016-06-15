@@ -16,6 +16,8 @@ LDFLAGS=-TSTM32F401RE_FLASH.ld -Wl,--gc-sections
 OBJECTS_DIR = objs/code
 SOURCE_DIR = src/code
 INCLUDE_DIR = inc/code
+INCLUDE_DIR += -Isrc/test/unity.framework/extras/fixture
+INCLUDE_DIR += -Isrc/test/unity.framework/src
 
 UNITY_TEST_OBJECTS_DIR = objs/test/unity
 UNITY_TEST_SOURCE_DIR = src/test/unity
@@ -48,6 +50,7 @@ debug_print_list = $(foreach word,$1,echo "  $(word)";) echo;
 
 #Find all source files (.c, .s)
 SOURCE := $(shell find $(SOURCE_DIR) -name '*.[cs]')
+SOURCE := $(filter-out %/main.c, $(SOURCE))
 
 #Find .o files for all source files (.c, .s, .cpp)
 OBJECTS := $(patsubst $(SOURCE_DIR)/%, $(OBJECTS_DIR)/%, $(call src_to_o, $(SOURCE)))
