@@ -25,8 +25,9 @@ UNITY_FRAMEWORK_DIR = $(PROJECT_HOME_DIR)/src/test/unity.framework
 
 #Location of the object files from the unity.framework files
 UNITY_FRAMEWORK_OBJECTS_DIR = $(PROJECT_HOME_DIR)/objs/test/unity.framework
-UNITY_CFLAGS += -DUNITY_OUTPUT_CHAR=UnityOutputCharSpy_OutputChar\
-				-DUNITY_TEST_OBJECTS_DIR=$(PROJECT_HOME_DIR)/objs/test/unity
+UNITY_CFLAGS += -DUNITY_TEST_OBJECTS_DIR=$(PROJECT_HOME_DIR)/objs/test/unity\
+###-DUNITY_OUTPUT_CHAR=UnityOutputCharSpy_OutputChar\
+
 #Location of all program source files
 SOURCE_DIR = \
 		src/code
